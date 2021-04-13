@@ -1,0 +1,22 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "A codewars style website that coaches you to cook through challenges",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joneslee111/final-project.git"
+  },
+  "author": "Lee, Katie, Raf, Rorie, Anna, Sandy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joneslee111/final-project/issues"
+  },
+  "homepage": "https://github.com/joneslee111/final-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
