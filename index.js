@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const fetch = require("node-fetch")
+const fetch = require("node-fetch");
 
 const API_KEY = "fe316b63c7b07739c4de5380f4bc6456";
 const APP_ID = "0b432fb5";
@@ -11,20 +11,33 @@ app.use(express.static('public'));
 
 // app.post('/https://api.edamam.com/search')
 
-
+// GET localhost:3000/fetch_recipe?from=10&to=20
 app.get("/fetch_recipe", async (req, res) => {
   console.log("/fetch_recipe endpoint called");
-  const url = `https://api.edamam.com/search?q=chicken&app_id=0b432fb5&app_key=fe316b63c7b07739c4de5380f4bc6456`;
+//   const fromNumber = req.params.from
+//   const toNumber = req.params.to
+  const url = `https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${API_KEY}`;
   const options = {
     "method": "GET"
   };
-  const response = await fetch(url, options);
+  const apiResponse = await fetch(url, options);
+  const jsonApiResponse = await apiResponse.json();
 
-  console.log("RESPONSE: ", response);
-  await res.json(response);
-//   console.log(data);
-  
+  console.log("RESPONSE: ", jsonApiResponse);
+
+  return res.json(jsonApiResponse);
 });
+
+
+// button (on client browser)
+// let currentPage = 0
+// let numResults = 10
+// document.addEventListener("click", () => {
+//     //get more function
+//     fetch(`localhost:3000/fetch_recipes?from=${currentPage}&to=${currentPage + numResults}`)
+
+//     curentPage += 10
+// })
 
 module.exports = app;
 
