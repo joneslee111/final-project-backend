@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Log In</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <h1>Log In</h1>
+
+    <form action="users/login" method="POST">
+        <div>
+            <input type="text" id="email" name="email" placeholder="john@smith.com" required>
+        </div>
+        <div>
+            <input type="password" id="password" name="password" placeholder="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Create Account">
+        </div>
+        <a href="/users/register">Don't have an account? Sign up here!</a>
+    </form>
 </body>
 </html>
