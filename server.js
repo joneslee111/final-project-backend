@@ -40,6 +40,27 @@ app.post("/users/register", (request, response) => {
         password,
         password_confirmation
     });
+
+    // creating error messages to make sure input is valid. 
+    let errors = [];
+
+    if (!name || !email || !username || !password || !password_confirmation){
+        errors.push({ message: "Please enter all required fields." });
+    }
+
+    if (password.length < 6){
+        errors.push({ message: "Passwords should be at least 6 characters." });
+    }
+
+    if (password != password_confirmation){
+        errors.push({ message: "Passwords do not match." });
+    }
+
+    // Messages all pushed to an error array. If the array has a message, the page will be refreshed with said message.
+    if (errors.length > 0){
+        response.render("register", { errors });
+    }
+
 });
 
 app.listen(PORT, () => {

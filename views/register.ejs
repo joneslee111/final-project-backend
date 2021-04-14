@@ -9,6 +9,14 @@
 <body>
     <h1>Create An Account</h1>
 
+    <ul>
+        <% if(typeof errors != 'undefined') { %> 
+            <% errors.forEach(error => { %>
+            <li><%= error.message %></li>
+             <% }) %>
+         <% } %>
+    </ul>
+
     <form action="/users/register" method="POST">
         <div>
             <input type="text" id="name" name="name" placeholder="Name" required>
