@@ -1,1 +1,19 @@
-Register
+<h1>Register</h1>
+
+<form action="/register" method="POST">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Register</button>
+  </div>
+</form>
+<a href="/login">Login</a>

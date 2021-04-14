@@ -3,6 +3,7 @@ const app = express()
 
 app.set('view-engine', 'ejs')
 
+
 app.get('/', (req, res) => {
   res.render('index.ejs', { name: 'USER' });
 });
@@ -15,6 +16,10 @@ app.get('/register', (req, res) => {
   res.render('register.ejs');
 });
 
+app.post('/register', (req, res) => {
+});
 
+app.post('/login', (req, res) => {
+});
 
 app.listen(3000)
