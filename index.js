@@ -16,7 +16,7 @@ app.get("/fetch_recipe", async (req, res) => {
   console.log("/fetch_recipe endpoint called");
 //   const fromNumber = req.params.from
 //   const toNumber = req.params.to
-  const url = `https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${API_KEY}`;
+  const url = `https://api.edamam.com/search?q&time=5-60&health=vegan&dishType=main&app_id=${APP_ID}&app_key=${API_KEY}`;
   const options = {
     "method": "GET"
   };
@@ -27,6 +27,7 @@ app.get("/fetch_recipe", async (req, res) => {
 
   return res.json(jsonApiResponse);
 });
+
 
 
 // button (on client browser)
