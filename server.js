@@ -19,8 +19,9 @@ app.get("/users/login", (request, response) => {
     response.render("login")
 });
 
+// set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", (request, response) => {
-    response.render("dashboard")
+    response.render("dashboard", { user: "Rorie" })
 });
 
 app.listen(PORT, () => {
