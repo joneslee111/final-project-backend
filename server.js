@@ -1,5 +1,7 @@
-const express = require('express');
+const express = require("express");
 const app = express();
+// require the db config file to connect to the right database
+const { pool } = require("./dbConfig");
 
 const PORT = process.env.PORT || 9000;
 
