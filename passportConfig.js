@@ -5,8 +5,7 @@ const bcrypt = require("bcrypt");
 function initialize(passport) {
     const authenticateUser = (email, password, done) => {
         // checks to see if the user is in the database via the email param
-        pool.query(
-            `SELECT * FROM users WHERE email = $1`,[email],
+        pool.query(`SELECT * FROM users WHERE email = $1`,[email],
             (error, results) => {
                 if (error) {
                     throw error;
@@ -21,7 +20,7 @@ function initialize(passport) {
                         if (error) {
                             throw error
                         }
-                        // done is an in-built node function: https://stackoverflow.com/questions/28656780/what-is-the-attribute-done-in-nodejs
+                        // 'done' is an in-built node function: https://stackoverflow.com/questions/28656780/what-is-the-attribute-done-in-nodejs
                         // this takes two params - first "null" (usually an error but there should be no errors at this point), 
                         // second param - returns the user. This allows the done function to store the user in the session cookie of our app.
                         if (isMatch) {
@@ -47,5 +46,22 @@ function initialize(passport) {
         authenticateUser
         )
     );
-    
+
+    // stores the user id in the session
+    passport.serializeUser((user, done) => done(null, user.id));
+
+    // this method uses the id from serializeUser to attain the user's details from the database
+    // this method also allows us to store the full user object into the session
+    passport.deserializeUser((id, done) => {
+        pool.query(`SELECT * FROM users WHERE id = $1`, [id], (error, results) => {
+                if (error){
+                    throw error
+                }else{
+                    return done(null, results.rows[0])
+                }
+            }
+        )
+    })
 }
+// exporting the large initialize function created above (used in the server.js file)
+module.exports = initialize;

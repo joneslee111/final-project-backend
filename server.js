@@ -5,6 +5,10 @@ const { pool } = require("./dbConfig");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const flash = require("express-flash");
+const passport = require("passport");
+const intializePassport = require("./passportConfig");
+
+intializePassport(passport);
 
 const PORT = process.env.PORT || 9000;
 
@@ -18,12 +22,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
     session({
     secret: "secretSession",
-
     resave: false,
-
     saveUninitialized: false
     })
 );
+
+app.use(passport.initialize);
+app.use(passport.session);
 
 app.use(flash());
 
@@ -87,9 +92,7 @@ app.post("/users/register", async (request, response) => {
         console.log(hashedPassword);
         // this looks into the database using the .query method
         // the $1 is a placeholder that gets replaced by the param '[email]' when searching through the database
-        pool.query(
-            `SELECT * FROM users WHERE email = $1`, 
-            [email],
+        pool.query(`SELECT * FROM users WHERE email = $1`, [email],
             (emailError, results) => {
                 if (emailError) {
                     throw emailError;
@@ -101,11 +104,8 @@ app.post("/users/register", async (request, response) => {
                     errors.push({ message: "Email already in use!"});
                     response.render("register", { errors });
                 }else{
-                    pool.query(
-                        `INSERT INTO users (name, email, username, password)
-                        VALUES ($1, $2, $3, $4)
-                        RETURNING id, password`, 
-                        [name, email, username, hashedPassword],
+                    pool.query(`INSERT INTO users (name, email, username, password) VALUES ($1, $2, $3, $4)`, 
+                    [name, email, username, hashedPassword],
                         (error, results) => {
                             if (error) {
                                 throw error;
