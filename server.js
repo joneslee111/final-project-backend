@@ -3,13 +3,20 @@ const app = express();
 // require the db config file to connect to the right database - assigned to the constant object 'pool'
 const { pool } = require("./dbConfig");
 const bcrypt = require("bcrypt");
+const session = require("express-session");
+const flash = require("express-flash");
 
 const PORT = process.env.PORT || 9000;
+
+// MIDDLEWARE
 
 // this tells our app to render the ejs files in the views folder
 app.set("view engine", "ejs"); 
 // this send details from the front end to the server
 app.use(express.urlencoded({ extended: false }));
+
+
+// ROUTES
 
 // these are the app controller routes
 app.get("/", (request, response) => {
@@ -67,6 +74,7 @@ app.post("/users/register", async (request, response) => {
         // getting visability to see if the hash is working
         console.log(hashedPassword);
         // this looks into the database using the .query method
+        // the $1 is a placeholder that gets replaced by the param '[email]' when searching through the database
         pool.query(
             `SELECT * FROM users WHERE email = $1`, 
             [email],
