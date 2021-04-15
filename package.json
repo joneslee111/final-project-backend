@@ -22,6 +22,5 @@
     "node-fetch": "^2.6.1",
     "pg": "^8.6.0"
   },
-  "devDependencies": {},
   "keywords": []
 }

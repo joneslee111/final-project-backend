@@ -1,19 +1,16 @@
 const express = require('express');
 const app = express();
 const fetch = require("node-fetch");
-
+const pool = require("./db");
 const API_KEY = "36a625081590440285cabb596440609b";
 
-
-
-// const API_KEY = "fe316b63c7b07739c4de5380f4bc6456";
-// const APP_ID = "0b432fb5";
 
 app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
 
 
 // app.post('/https://api.edamam.com/search')
+
 
 // GET localhost:3000/fetch_recipe?from=10&to=20
 app.get("/fetch_recipe", async (req, res) => {
@@ -50,4 +47,16 @@ const url ='https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstruction
 //     curentPage += 10
 // })
 
+// get from database
+app.get("/all_recipes", async(req, res) => {
+  try {
+    const allRecipes = await pool.query("SELECT * FROM curated_recipes");
+    res.json(allRecipes.levels);
+  } catch (err) {
+
+  } 
+});
+
+
 module.exports = app;
+
