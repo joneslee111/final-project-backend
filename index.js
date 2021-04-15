@@ -22,7 +22,7 @@ app.get("/fetch_recipe", async (req, res) => {
 //   const toNumber = req.params.to
 // const url = `https://api.spoonacular.com/recipes/1095886/analyzedInstructions&?apiKey=${API_KEY}`
 
-const url ='https://api.spoonacular.com/recipes/715495/analyzedInstructions/?&apiKey=36a625081590440285cabb596440609b'
+const url ='https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions/?&apiKey=36a625081590440285cabb596440609b'
 
 // const url = `https://api.spoonacular.com/recipes/complexSearch/?instructionsRequired=true&maxReadyTime=120&&sort=time&ingredients=&sortDirection=desc&number=10&apiKey=${API_KEY}`;
 
@@ -51,4 +51,3 @@ const url ='https://api.spoonacular.com/recipes/715495/analyzedInstructions/?&ap
 // })
 
 module.exports = app;
-
