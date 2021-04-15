@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 // require the db config file to connect to the right database
 const { pool } = require("./dbConfig");
+const bcrypt = require("bcrypt");
 
 const PORT = process.env.PORT || 9000;
 
@@ -29,7 +30,7 @@ app.get("/users/dashboard", (request, response) => {
 });
 
 // retrieving the params from the register route with a post request
-app.post("/users/register", (request, response) => {
+app.post("/users/register", async (request, response) => {
     let { name, email, username, password, password_confirmation } = request.body;
 
 // printing the params back to the console to see if it's returning anything - test passes!
@@ -59,7 +60,13 @@ app.post("/users/register", (request, response) => {
     // Messages all pushed to an error array. If the array has a message, the page will be refreshed with said message.
     if (errors.length > 0){
         response.render("register", { errors });
-    }
+    }else{
+        // If reaches here, form validation has passed.
+        // using bcrypt to add a "salt" of "10" to the users password so we can store it in the database safely.
+        let hashedPassword = await bcrypt.hash(password, 10); 
+        // getting visability to see if the hash is working
+        console.log(hashedPassword)
+    };
 
 });
 
