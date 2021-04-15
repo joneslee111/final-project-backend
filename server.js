@@ -31,7 +31,7 @@ app.use(passport.session())
 const users = [];
 
 //this will have to move to a controller folder
-app.get('/', (req, res) => {
+app.get('/', checkAuthenticated, (req, res) => {
   res.render('index.ejs', { name: req.user.name });
 });
 
@@ -66,6 +66,12 @@ app.post('/register', async (req, res) => {
   }
 });
 
-
+// call this function for every route where we require the user to be auth to access
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  res.redirect('/login')
+}
 
 app.listen(3000)
