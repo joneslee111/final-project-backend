@@ -7,6 +7,13 @@
     <title>Dashboard</title>
 </head>
 <body>
+    
+    <ul>
+    <% if(messages.success_msg) { %>
+        <li><%= messages.success_msg %></li>
+       <% } %>
+    </ul>
+
     <h1> Welcome to Cooking Chaos, <%= user %>! </h1><br>
     <h2>Please pick your Kata.</h2>
     <a href="/users/logout">Log Out</a>

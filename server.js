@@ -15,6 +15,18 @@ app.set("view engine", "ejs");
 // this send details from the front end to the server
 app.use(express.urlencoded({ extended: false }));
 
+app.use(
+    session({
+    secret: "secretSession",
+
+    resave: false,
+
+    saveUninitialized: false
+    })
+);
+
+app.use(flash());
+
 
 // ROUTES
 
@@ -88,6 +100,21 @@ app.post("/users/register", async (request, response) => {
                 if (results.rows.length > 0){
                     errors.push({ message: "Email already in use!"});
                     response.render("register", { errors });
+                }else{
+                    pool.query(
+                        `INSERT INTO users (name, email, username, password)
+                        VALUES ($1, $2, $3, $4)
+                        RETURNING id, password`, 
+                        [name, email, username, hashedPassword],
+                        (error, results) => {
+                            if (error) {
+                                throw error;
+                            }
+                            console.log(results.rows);
+                            request.flash('success_msg', "Successfully created an account!")
+                            response.redirect("/users/dashboard")
+                        }
+                    )
                 }
             } 
         );
