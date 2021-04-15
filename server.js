@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-// require the db config file to connect to the right database
+// require the db config file to connect to the right database - assigned to the constant object 'pool'
 const { pool } = require("./dbConfig");
 const bcrypt = require("bcrypt");
 
@@ -65,7 +65,24 @@ app.post("/users/register", async (request, response) => {
         // using bcrypt to add a "salt" of "10" to the users password so we can store it in the database safely.
         let hashedPassword = await bcrypt.hash(password, 10); 
         // getting visability to see if the hash is working
-        console.log(hashedPassword)
+        console.log(hashedPassword);
+        // this looks into the database using the .query method
+        pool.query(
+            `SELECT * FROM users WHERE email = $1`, 
+            [email],
+            (emailError, results) => {
+                if (emailError) {
+                    throw emailError;
+                }
+                // getting visibility
+                console.log(results.rows);
+                // email validation method, similar to the validation methods above
+                if (results.rows.length > 0){
+                    errors.push({ message: "Email already in use!"});
+                    response.render("register", { errors });
+                }
+            } 
+        );
     };
 
 });
