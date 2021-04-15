@@ -122,6 +122,15 @@ app.post("/users/register", async (request, response) => {
 
 });
 
+// passport.authenticate uses the local ("Local Strategy" line 1 on passport Config). 
+// This then takes an object which redirects the user based on success or failure, using passport features
+// failureFlash will use the express flash methods in the passport.config initialize method.
+app.post("/users/login", passport.authenticate("local", {
+    successRedirect: "/users/dashboard",
+    failureRedirect: "/users/login",
+    failureFlash: true
+}));
+
 app.listen(PORT, () => {
     console.log( `server running on port ${PORT}`);
 });
