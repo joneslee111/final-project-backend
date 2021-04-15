@@ -139,7 +139,7 @@ const session = require('express-session')
 const initializePassport  = require('./passport-config')
 const methodOverrride = require('method-override')
 // require the db config file to connect to the right database - assigned to the constant object 'pool'
-const { pool } = require("./dbConfig");
+const { pool } = require("./dbConfig")
 
 initializePassport(
   passport, 
@@ -160,7 +160,7 @@ app.use(passport.session())
 app.use(methodOverrride('_method'))
 
 // the below willl be replace with a database connection
-const users = [];
+// const users = [];
 
 //this will have to move to a controller folder
 app.get('/', checkAuthenticated, (req, res) => {
@@ -184,37 +184,29 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 let errors = [];
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
-  if (password != password_confirmation){
+  if (req.body.password != req.body.password_confirmation){
         errors.push({ message: "Passwords do not match." });
     }
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    // push user to database here
-//     users.push({
-//       id: Date.now().toString(),
-//       name: req.body.name,
-//       username: req.body.username,
-//       email: req.body.email,
-//       password: hashedPassword
-//     })
-      pool.query(
-      `SELECT * FROM users WHERE email = $1`, [email], (emailError, results) => {
-          if (emailError) { throw emailError; }
-          // getting visibility
-          console.log(results.rows);
-          // email validation method, similar to the validation methods above
-          if (results.rows.length > 0) {
-              errors.push({ message: "Email already in use!"});
-              res.render("register", { errors });
-          } else {
-              pool.query(`INSERT INTO users (name, email, username, password) VALUES ($1, $2, $3, $4) RETURNING id, password`, 
-                  [name, email, username, hashedPassword],
-                  (error, results) => {
-                      if (error) { throw error; }
-                      console.log(results.rows);
-                      req.flash('success_msg', "Successfully created an account!")
-                      res.redirect("/login")})
-            }})
+    pool.query(
+    `SELECT * FROM users WHERE email = $1`, [email], (emailError, results) => {
+        if (emailError) { throw emailError; }
+        // getting visibility
+        console.log(results.rows);
+        // email validation method, similar to the validation methods above
+        if (results.rows.length > 0) {
+            errors.push({ message: "Email already in use!"});
+            res.render("register", { errors });
+        } else {
+            pool.query(`INSERT INTO users (name, email, username, password) VALUES ($1, $2, $3, $4) RETURNING id, password`, 
+                [name, email, username, hashedPassword],
+                (error, results) => {
+                    if (error) { throw error; }
+                    console.log(results.rows);
+                    req.flash('success_msg', "Successfully created an account!")
+                    res.redirect("/login")})
+          }})
 
     res.redirect('/login')
   } catch {
