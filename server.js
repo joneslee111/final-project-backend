@@ -9,6 +9,7 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const initializePassport  = require('./passport-config')
+const methodOverrride = require('method-override')
 
 initializePassport(
   passport, 
@@ -26,6 +27,7 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(methodOverrride('_method'))
 
 // the below willl be replace with a database connection
 const users = [];
@@ -66,6 +68,11 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
   }
 });
 
+app.delete('/logout', (req, res) => {
+  req.logout()
+  res.redirect('/login')
+})
+
 // call this function for every route where we require the user to be auth to access
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -73,7 +80,7 @@ function checkAuthenticated(req, res, next) {
   }
   res.redirect('/login')
 }
-
+// call this function for every route where we require the user to not be auth to access
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return res.redirect('/')
