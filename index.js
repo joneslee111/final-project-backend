@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const fetch = require("node-fetch");
-const pool = require("./db");
+// const pool = require("./db");
+const pg = require("pg");
+const R = require('ramda')
 const API_KEY = "36a625081590440285cabb596440609b";
+const level = 3
 
 
 app.listen(3000, () => console.log('listening at 3000'));
@@ -48,15 +51,25 @@ const url ='https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstruction
 // })
 
 // get from database
-app.get("/all_recipes", async(req, res) => {
-  try {
-    const allRecipes = await pool.query("SELECT * FROM curated_recipes");
-    res.json(allRecipes.levels);
-  } catch (err) {
 
-  } 
-});
+const config = {
+  database: 'final_project'
+}
+
+const pool = new pg.Pool(config);
+
+pool.connect((err, client, done) => {
+    if (err) throw err;
+    client.query(`SELECT * FROM curated_recipes WHERE level = '3'`, (err, res) => {
+      if (err)
+        console.log(err.stack);
+      else {
+        console.log(res.rows);
+      }
+      pool.end()
+    })
+
+})
 
 
 module.exports = app;
-
