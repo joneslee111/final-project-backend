@@ -18,12 +18,12 @@ function initialize(passport) {
                     // isMatch will be rendered true if the passwords do match
                     bcrypt.compare(password, user.password, (error, isMatch)=>{
                         if (error) {
-                            throw error
+                            throw error;
                         }
                         // 'done' is an in-built node function: https://stackoverflow.com/questions/28656780/what-is-the-attribute-done-in-nodejs
                         // this takes two params - first "null" (usually an error but there should be no errors at this point), 
                         // second param - returns the user. This allows the done function to store the user in the session cookie of our app.
-                        if (isMatch) {
+                        if (isMatch === true) {
                             return done(null, user);
                         // isMatch is false 
                         }else{

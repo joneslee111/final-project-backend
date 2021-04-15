@@ -6,9 +6,9 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 const flash = require("express-flash");
 const passport = require("passport");
-const intializePassport = require("./passportConfig");
+const initializePassport = require("./passportConfig");
 
-intializePassport(passport);
+initializePassport(passport);
 
 const PORT = process.env.PORT || 9000;
 
@@ -27,8 +27,8 @@ app.use(
     })
 );
 
-app.use(passport.initialize);
-app.use(passport.session);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
 
@@ -41,17 +41,23 @@ app.get("/", (request, response) => {
 });
 
 app.get("/users/register", (request, response) => {
-    response.render("register")
+    response.render("register");
 });
 
 app.get("/users/login", (request, response) => {
-    response.render("login")
+    response.render("login");
 });
 
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", (request, response) => {
-    response.render("dashboard", { user: "Rorie" })
+    response.render("dashboard", { user: "Rorie" });
 });
+
+app.get("/users/logout", (request, response) => {
+    request.logOut();
+    request.flash('success_msg', "You have successfully logged out");
+    response.redirect("/users/login");
+})
 
 // retrieving the params from the register route with a post request
 app.post("/users/register", async (request, response) => {
@@ -93,9 +99,9 @@ app.post("/users/register", async (request, response) => {
         // this looks into the database using the .query method
         // the $1 is a placeholder that gets replaced by the param '[email]' when searching through the database
         pool.query(`SELECT * FROM users WHERE email = $1`, [email],
-            (emailError, results) => {
-                if (emailError) {
-                    throw emailError;
+            (error, results) => {
+                if (error) {
+                    throw error
                 }
                 // getting visibility
                 console.log(results.rows);
