@@ -50,7 +50,7 @@ app.get("/users/login", (request, response) => {
 
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", (request, response) => {
-    response.render("dashboard", { user: "Rorie" });
+    response.render("dashboard", { user: request.user.name });
 });
 
 app.get("/users/logout", (request, response) => {
