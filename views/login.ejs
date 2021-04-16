@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+</head>
+<body>
+    <h1>Log In</h1>
+
+    <!-- passport will store any error messages in the below "messages" object. -->
+    <!-- The .error is taken from the flash messages in the passport config file --> 
+    <ul>
+        <% if(messages.error) { %>
+         <li><%= messages.error %></li>   
+       <% } %>
+    </ul>
+
+    <form action="/users/login" method="POST">
+        <div>
+            <input type="text" id="email" name="email" placeholder="john@smith.com" required>
+        </div>
+        <div>
+            <input type="password" id="password" name="password" placeholder="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Log In">
+        </div>
+        <a href="/users/register">Don't have an account? Sign up here!</a>
+    </form>
+</body>
+</html>

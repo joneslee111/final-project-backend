@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create An Account</title>
+</head>
+<body>
+    <h1>Create An Account</h1>
+
+    <ul>
+        <% if(typeof errors != 'undefined') { %> 
+            <% errors.forEach(error => { %>
+            <li><%= error.message %></li>
+             <% }) %>
+         <% } %>
+    </ul>
+
+    <form action="/users/register" method="POST">
+        <div>
+            <input type="text" id="name" name="name" placeholder="Name" required>
+        </div>
+        <div>
+            <input type="text" id="email" name="email" placeholder="john@smith.com" required>
+        </div>
+        <div>
+            <input type="text" id="username" name="username" placeholder="@john_smith" required>
+        </div>
+        <div>
+            <input type="password" id="password" name="password" placeholder="password" required>
+        </div>
+        <div>
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="re-type password" required>
+        </div>
+        <div>
+            <input type="submit" value="Create Account">
+        </div>
+        <a href="/users/login">Already have an account? Log in here!</a>
+    </form>
+</body>
+</html>
