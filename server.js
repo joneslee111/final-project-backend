@@ -117,8 +117,8 @@ app.post("/users/register", async (request, response) => {
                                 throw error;
                             }
                             console.log(results.rows);
-                            request.flash('success_msg', "Successfully created an account!")
-                            response.redirect("/users/dashboard")
+                            request.flash('success_msg', "Successfully created an account! Please log in")
+                            response.redirect("/users/login")
                         }
                     )
                 }
