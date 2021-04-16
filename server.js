@@ -40,16 +40,16 @@ app.get("/", (request, response) => {
     response.render("index");
 });
 
-app.get("/users/register", (request, response) => {
+app.get("/users/register", checkAuthenticated, (request, response) => {
     response.render("register");
 });
 
-app.get("/users/login", (request, response) => {
+app.get("/users/login", checkAuthenticated, (request, response) => {
     response.render("login");
 });
 
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
-app.get("/users/dashboard", (request, response) => {
+app.get("/users/dashboard", checkNotAuthenticated, (request, response) => {
     response.render("dashboard", { user: request.user.name });
 });
 
@@ -136,6 +136,26 @@ app.post("/users/login", passport.authenticate("local", {
     failureRedirect: "/users/login",
     failureFlash: true
 }));
+
+function checkAuthenticated(request, response, next){
+    // if a user is authenticated, they'll be re-directed to the dashboard
+    // isAuthenticated is a passport method which checks if the user is authenticated
+    if (request.isAuthenticated()){
+        return response.redirect("/users/dashboard");
+    }
+    // otherwise, move on to the next piece of MIDDLEWARE.
+    next();
+};
+
+function checkNotAuthenticated(request, response, next){
+    // if a user is not authenticated, they'll be re-directed to the login page.
+    // isAuthenticated is a passport method which checks if the user is authenticated.
+    if (request.isAuthenticated()) {
+        // if user is authenticated, move onto the next piece of Middle ware.
+        return next()
+      }
+      response.redirect("/users/login"); 
+};
 
 app.listen(PORT, () => {
     console.log( `server running on port ${PORT}`);
