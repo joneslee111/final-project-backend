@@ -48,9 +48,13 @@ app.get("/users/login", checkAuthenticated, (request, response) => {
     response.render("login");
 });
 
+app.get("/users/cooking_level", checkAuthenticated, (request, response) => {
+    response.render("cooking_level");
+});
+
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", checkNotAuthenticated, (request, response) => {
-    response.render("dashboard", { user: request.user.name });
+    response.render("dashboard", { user: request.user.name, cooking_level: request.user.cooking_level });
 });
 
 app.get("/users/logout", (request, response) => {
@@ -61,7 +65,7 @@ app.get("/users/logout", (request, response) => {
 
 // retrieving the params from the register route with a post request
 app.post("/users/register", async (request, response) => {
-    let { name, email, username, password, password_confirmation } = request.body;
+    let { name, email, username, password, password_confirmation, cooking_level } = request.body;
 
 // printing the params back to the console to see if it's returning anything - test passes!
     console.log({
@@ -69,13 +73,14 @@ app.post("/users/register", async (request, response) => {
         email,
         username,
         password,
-        password_confirmation
+        password_confirmation,
+        cooking_level
     });
 
     // creating error messages to make sure input is valid. 
     let errors = [];
 
-    if (!name || !email || !username || !password || !password_confirmation){
+    if (!name || !email || !username || !password || !password_confirmation || !cooking_level){
         errors.push({ message: "Please enter all required fields." });
     }
 
@@ -110,15 +115,15 @@ app.post("/users/register", async (request, response) => {
                     errors.push({ message: "Email already in use!"});
                     response.render("register", { errors });
                 }else{
-                    pool.query(`INSERT INTO users (name, email, username, password) VALUES ($1, $2, $3, $4)`, 
-                    [name, email, username, hashedPassword],
+                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level) VALUES ($1, $2, $3, $4, $5)`, 
+                    [name, email, username, hashedPassword, cooking_level],
                         (error, results) => {
                             if (error) {
                                 throw error;
                             }
                             console.log(results.rows);
                             request.flash('success_msg', "Successfully created an account! Please log in")
-                            response.redirect("/users/login")
+                            response.redirect("/users/dashboard")
                         }
                     )
                 }
