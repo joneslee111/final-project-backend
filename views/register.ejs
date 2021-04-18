@@ -19,18 +19,23 @@
 
     <form action="/users/register" method="POST">
         <div>
-            <input type="text" id="name" name="name" placeholder="Name" required>
+            <label for="cooking_level">Name:</label>
+            <input type="text" id="name" name="name" placeholder="John Smith" required>
         </div>
         <div>
+            <label for="cooking_level">Email:</label>
             <input type="text" id="email" name="email" placeholder="john@smith.com" required>
         </div>
         <div>
+            <label for="cooking_level">Username:</label>
             <input type="text" id="username" name="username" placeholder="@john_smith" required>
         </div>
         <div>
-            <input type="password" id="password" name="password" placeholder="password" required>
+            <label for="cooking_level">Password:</label>
+            <input type="password" id="password" name="password" placeholder="6 characters minimum" required>
         </div>
         <div>
+            <label for="cooking_level">Password Confirmation:</label>
             <input type="password" id="password_confirmation" name="password_confirmation" placeholder="re-type password" required>
         </div>
         <div>

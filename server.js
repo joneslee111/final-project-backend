@@ -123,7 +123,7 @@ app.post("/users/register", async (request, response) => {
                             }
                             console.log(results.rows);
                             request.flash('success_msg', "Successfully created an account! Please log in")
-                            response.redirect("/users/dashboard")
+                            response.redirect("/users/login")
                         }
                     )
                 }
