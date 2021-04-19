@@ -7,6 +7,7 @@ const session = require("express-session");
 const flash = require("express-flash");
 const passport = require("passport");
 const initializePassport = require("./passportConfig");
+const cors = require("cors");
 
 initializePassport(passport);
 
@@ -15,7 +16,7 @@ const PORT = process.env.PORT || 9000;
 // MIDDLEWARE
 
 // this tells our app to render the ejs files in the views folder
-app.set("view engine", "ejs"); 
+app.set("view engine", "ejs");
 // this send details from the front end to the server
 app.use(express.urlencoded({ extended: false }));
 
@@ -31,7 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash());
-
+app.use(cors());
 
 // ROUTES
 
@@ -77,7 +78,7 @@ app.post("/users/register", async (request, response) => {
         cooking_level
     });
 
-    // creating error messages to make sure input is valid. 
+    // creating error messages to make sure input is valid.
     let errors = [];
 
     if (!name || !email || !username || !password || !password_confirmation || !cooking_level){
@@ -98,7 +99,7 @@ app.post("/users/register", async (request, response) => {
     }else{
         // If reaches here, form validation has passed.
         // using bcrypt to add a "salt" of "10" to the users password so we can store it in the database safely.
-        let hashedPassword = await bcrypt.hash(password, 10); 
+        let hashedPassword = await bcrypt.hash(password, 10);
         // getting visability to see if the hash is working
         console.log(hashedPassword);
         // this looks into the database using the .query method
@@ -115,7 +116,7 @@ app.post("/users/register", async (request, response) => {
                     errors.push({ message: "Email already in use!"});
                     response.render("register", { errors });
                 }else{
-                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level) VALUES ($1, $2, $3, $4, $5)`, 
+                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level) VALUES ($1, $2, $3, $4, $5)`,
                     [name, email, username, hashedPassword, cooking_level],
                         (error, results) => {
                             if (error) {
@@ -127,13 +128,13 @@ app.post("/users/register", async (request, response) => {
                         }
                     )
                 }
-            } 
+            }
         );
     };
 
 });
 
-// passport.authenticate uses the local ("Local Strategy" line 1 on passport Config). 
+// passport.authenticate uses the local ("Local Strategy" line 1 on passport Config).
 // This then takes an object which redirects the user based on success or failure, using passport features
 // failureFlash will use the express flash methods in the passport.config initialize method.
 app.post("/users/login", passport.authenticate("local", {
@@ -159,7 +160,7 @@ function checkNotAuthenticated(request, response, next){
         // if user is authenticated, move onto the next piece of Middle ware.
         return next()
       }
-      response.redirect("/users/login"); 
+      response.redirect("/users/login");
 };
 
 app.listen(PORT, () => {
