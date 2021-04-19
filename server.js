@@ -7,6 +7,8 @@ const session = require("express-session");
 const flash = require("express-flash");
 const passport = require("passport");
 const initializePassport = require("./passportConfig");
+const fetch = require("node-fetch");
+const pg = require("pg");
 
 initializePassport(passport);
 
@@ -45,11 +47,7 @@ app.get("/", checkNotAuthenticated, async (request, response) => {
     } catch (err) {
         console.error(err.message)
     };
-    // response.render("index", {recipes_list: recipes_list});
 });
-
-
-
 
 
 app.get("/users/register", checkAuthenticated, (request, response) => {
@@ -59,7 +57,6 @@ app.get("/users/register", checkAuthenticated, (request, response) => {
 app.get("/users/login", checkAuthenticated, (request, response) => {
     response.render("login");
 });
-
 
 
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
@@ -78,13 +75,7 @@ app.post("/users/register", async (request, response) => {
     let { name, email, username, password, password_confirmation } = request.body;
 
 // printing the params back to the console to see if it's returning anything - test passes!
-    console.log({
-        name,
-        email,
-        username,
-        password,
-        password_confirmation
-    });
+    console.log({ name, email, username, password, password_confirmation });
 
     // creating error messages to make sure input is valid. 
     let errors = [];
@@ -175,18 +166,9 @@ app.listen(PORT, () => {
     console.log( `server running on port ${PORT}`);
 });
 
-// --------------------
-// const express = require('express');
-// const app = express();
-const fetch = require("node-fetch");
 
-// const pool = require("./db");
-const pg = require("pg");
-const R = require('ramda')
+// const R = require('ramda')
 const API_KEY = "36a625081590440285cabb596440609b";
-const level = 3
-const sqlString =
-
 
 app.use(express.static('public'));
 
@@ -208,4 +190,3 @@ app.get("/fetch_recipe", async (req, res) => {
 
 
 module.exports = app;
-// get from database
