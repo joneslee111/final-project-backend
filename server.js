@@ -170,30 +170,30 @@ app.listen(PORT, () => {
 // --------------------
 // const express = require('express');
 // const app = express();
-// const fetch = require("node-fetch");
+const fetch = require("node-fetch");
 
-// // const pool = require("./db");
-// const pg = require("pg");
-// const R = require('ramda')
-// const API_KEY = "36a625081590440285cabb596440609b";
-// const level = 3
-// const sqlString =
+// const pool = require("./db");
+const pg = require("pg");
+const R = require('ramda')
+const API_KEY = "36a625081590440285cabb596440609b";
+const level = 3
+const sqlString =
 
 
 // app.listen(3000, () => console.log('listening at 3000'));
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 
 // app.post('/https://api.edamam.com/search')
 
 
 // GET localhost:3000/fetch_recipe?from=10&to=20
-// app.get("/fetch_recipe", async (req, res) => {
-//   console.log("/fetch_recipe endpoint called");
-// //   const fromNumber = req.params.from
-// //   const toNumber = req.params.to
+app.get("/fetch_recipe", async (req, res) => {
+  console.log("/fetch_recipe endpoint called");
+//   const fromNumber = req.params.from
+//   const toNumber = req.params.to
 
-// const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
+const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
 
 
 // const url = `https://api.spoonacular.com/recipes/1095886/analyzedInstructions&?apiKey=${API_KEY}`
@@ -201,16 +201,16 @@ app.listen(PORT, () => {
 // const url = `https://api.spoonacular.com/recipes/complexSearch/?instructionsRequired=true&maxReadyTime=120&&sort=time&ingredients=&sortDirection=desc&number=10&apiKey=${API_KEY}`;
 
 
-//   const options = {
-//     "method": "GET"
-//   };
-//   const apiResponse = await fetch(url, options);
-//   const jsonApiResponse = await apiResponse.json();
+  const options = {
+    "method": "GET"
+  };
+  const apiResponse = await fetch(url, options);
+  const jsonApiResponse = await apiResponse.json();
 
-//   console.log("RESPONSE: ", jsonApiResponse);
+  console.log("RESPONSE: ", jsonApiResponse);
 
-//   return res.json(jsonApiResponse);
-// });
+  return res.json(jsonApiResponse);
+});
 
 
 
@@ -244,6 +244,11 @@ app.listen(PORT, () => {
 //     })
 
 // })
+
+
+module.exports = app;
+// get from database
+
 
 
 module.exports = app;
