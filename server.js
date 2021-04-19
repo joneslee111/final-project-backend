@@ -61,6 +61,7 @@ app.get("/users/login", checkAuthenticated, (request, response) => {
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", checkNotAuthenticated, (request, response) => {
     response.render("dashboard", { user: request.user.name, level: request.user.cooking_level });
+});
 
 app.get("/users/logout", (request, response) => {
     request.logOut();
