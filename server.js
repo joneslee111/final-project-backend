@@ -36,9 +36,21 @@ app.use(flash());
 // ROUTES
 
 // these are the app controller routes
-app.get("/", (request, response) => {
-    response.render("index");
+app.get("/", checkNotAuthenticated, async (request, response) => {
+    try {
+        const level = request.user.cooking_level;
+        console.log(level);
+        const recipes = await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]);
+        response.json(recipes.rows)
+    } catch (err) {
+        console.error(err.message)
+    };
+    // response.render("index", {recipes_list: recipes_list});
 });
+
+
+
+
 
 app.get("/users/register", checkAuthenticated, (request, response) => {
     response.render("register");
@@ -48,9 +60,11 @@ app.get("/users/login", checkAuthenticated, (request, response) => {
     response.render("login");
 });
 
+
+
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", checkNotAuthenticated, (request, response) => {
-    response.render("dashboard", { user: request.user.name });
+    response.render("dashboard", { user: request.user.name, level: request.user.cooking_level });
 });
 
 app.get("/users/logout", (request, response) => {
@@ -132,7 +146,7 @@ app.post("/users/register", async (request, response) => {
 // This then takes an object which redirects the user based on success or failure, using passport features
 // failureFlash will use the express flash methods in the passport.config initialize method.
 app.post("/users/login", passport.authenticate("local", {
-    successRedirect: "/users/dashboard",
+    successRedirect: "/",
     failureRedirect: "/users/login",
     failureFlash: true
 }));
@@ -174,27 +188,13 @@ const level = 3
 const sqlString =
 
 
-// app.listen(3000, () => console.log('listening at 3000'));
 app.use(express.static('public'));
 
-
-// app.post('/https://api.edamam.com/search')
-
-
-// GET localhost:3000/fetch_recipe?from=10&to=20
 app.get("/fetch_recipe", async (req, res) => {
   console.log("/fetch_recipe endpoint called");
 //   const fromNumber = req.params.from
 //   const toNumber = req.params.to
-
-const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
-
-
-// const url = `https://api.spoonacular.com/recipes/1095886/analyzedInstructions&?apiKey=${API_KEY}`
-
-// const url = `https://api.spoonacular.com/recipes/complexSearch/?instructionsRequired=true&maxReadyTime=120&&sort=time&ingredients=&sortDirection=desc&number=10&apiKey=${API_KEY}`;
-
-
+  const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
   const options = {
     "method": "GET"
   };
@@ -205,39 +205,6 @@ const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instr
 
   return res.json(jsonApiResponse);
 });
-
-
-
-// button (on client browser)
-// let currentPage = 0
-// let numResults = 10
-// document.addEventListener("click", () => {
-//     //get more function
-//     fetch(`localhost:3000/fetch_recipes?from=${currentPage}&to=${currentPage + numResults}`)
-
-//     curentPage += 10
-// })
-
-
-
-// const config = {
-//   database: 'final_project'
-// }
-
-// const pool = new pg.Pool(config);
-
-// pool.connect((err, client, done) => {
-//     if (err) throw err;
-//     client.query(`SELECT * FROM curated_recipes WHERE level = '1'`, (err, res) => {
-//       if (err)
-//         console.log(err.stack);
-//       else {
-//         console.log(res.rows);
-//       }
-//       pool.end()
-//     })
-
-// })
 
 
 module.exports = app;
