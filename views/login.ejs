@@ -17,6 +17,12 @@
        <% } %>
     </ul>
 
+    <ul>
+        <% if(messages.success_msg) { %>
+            <li><%= messages.success_msg %></li>
+           <% } %>
+    </ul>
+
     <form action="/users/login" method="POST">
         <div>
             <input type="text" id="email" name="email" placeholder="john@smith.com" required>

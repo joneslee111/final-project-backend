@@ -48,9 +48,13 @@ app.get("/users/login", checkAuthenticated, (request, response) => {
     response.render("login");
 });
 
+app.get("/users/cooking_level", checkAuthenticated, (request, response) => {
+    response.render("cooking_level");
+});
+
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", checkNotAuthenticated, (request, response) => {
-    response.render("dashboard", { user: request.user.name });
+    response.render("dashboard", { user: request.user.name, cooking_level: request.user.cooking_level });
 });
 
 app.get("/users/logout", (request, response) => {
@@ -61,7 +65,7 @@ app.get("/users/logout", (request, response) => {
 
 // retrieving the params from the register route with a post request
 app.post("/users/register", async (request, response) => {
-    let { name, email, username, password, password_confirmation } = request.body;
+    let { name, email, username, password, password_confirmation, cooking_level } = request.body;
 
 // printing the params back to the console to see if it's returning anything - test passes!
     console.log({
@@ -69,13 +73,14 @@ app.post("/users/register", async (request, response) => {
         email,
         username,
         password,
-        password_confirmation
+        password_confirmation,
+        cooking_level
     });
 
     // creating error messages to make sure input is valid. 
     let errors = [];
 
-    if (!name || !email || !username || !password || !password_confirmation){
+    if (!name || !email || !username || !password || !password_confirmation || !cooking_level){
         errors.push({ message: "Please enter all required fields." });
     }
 
@@ -110,8 +115,8 @@ app.post("/users/register", async (request, response) => {
                     errors.push({ message: "Email already in use!"});
                     response.render("register", { errors });
                 }else{
-                    pool.query(`INSERT INTO users (name, email, username, password) VALUES ($1, $2, $3, $4)`, 
-                    [name, email, username, hashedPassword],
+                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level) VALUES ($1, $2, $3, $4, $5)`, 
+                    [name, email, username, hashedPassword, cooking_level],
                         (error, results) => {
                             if (error) {
                                 throw error;
@@ -164,30 +169,30 @@ app.listen(PORT, () => {
 // --------------------
 // const express = require('express');
 // const app = express();
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
 
-// const pool = require("./db");
-const pg = require("pg");
-const R = require('ramda')
-const API_KEY = "36a625081590440285cabb596440609b";
-const level = 3
-const sqlString =
+// // const pool = require("./db");
+// const pg = require("pg");
+// const R = require('ramda')
+// const API_KEY = "36a625081590440285cabb596440609b";
+// const level = 3
+// const sqlString =
 
 
 // app.listen(3000, () => console.log('listening at 3000'));
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 
 // app.post('/https://api.edamam.com/search')
 
 
 // GET localhost:3000/fetch_recipe?from=10&to=20
-app.get("/fetch_recipe", async (req, res) => {
-  console.log("/fetch_recipe endpoint called");
-//   const fromNumber = req.params.from
-//   const toNumber = req.params.to
+// app.get("/fetch_recipe", async (req, res) => {
+//   console.log("/fetch_recipe endpoint called");
+// //   const fromNumber = req.params.from
+// //   const toNumber = req.params.to
 
-const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
+// const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
 
 
 // const url = `https://api.spoonacular.com/recipes/1095886/analyzedInstructions&?apiKey=${API_KEY}`
@@ -195,16 +200,16 @@ const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instr
 // const url = `https://api.spoonacular.com/recipes/complexSearch/?instructionsRequired=true&maxReadyTime=120&&sort=time&ingredients=&sortDirection=desc&number=10&apiKey=${API_KEY}`;
 
 
-  const options = {
-    "method": "GET"
-  };
-  const apiResponse = await fetch(url, options);
-  const jsonApiResponse = await apiResponse.json();
+//   const options = {
+//     "method": "GET"
+//   };
+//   const apiResponse = await fetch(url, options);
+//   const jsonApiResponse = await apiResponse.json();
 
-  console.log("RESPONSE: ", jsonApiResponse);
+//   console.log("RESPONSE: ", jsonApiResponse);
 
-  return res.json(jsonApiResponse);
-});
+//   return res.json(jsonApiResponse);
+// });
 
 
 
