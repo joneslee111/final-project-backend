@@ -10,6 +10,7 @@ const initializePassport = require("./passportConfig");
 const fetch = require("node-fetch");
 const pg = require("pg");
 const cors = require("cors");
+const { request } = require("express");
 
 initializePassport(passport);
 
@@ -19,8 +20,12 @@ const PORT = process.env.PORT || 9000;
 
 // this tells our app to render the ejs files in the views folder
 app.set("view engine", "ejs");
-// this send details from the front end to the server
-app.use(express.urlencoded({ extended: false }));
+
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(express.json())
 
 app.use(
     session({
@@ -50,13 +55,13 @@ app.get("/", checkNotAuthenticated, async (request, response) => {
     };
 });
 
-app.get("/users/register", checkAuthenticated, (request, response) => {
-    response.render("register");
-});
+// app.get("/users/register", checkAuthenticated, (request, response) => {
+//     response.render("register");
+// });
 
-app.get("/users/login", checkAuthenticated, (request, response) => {
-    response.render("login");
-});
+// app.get("/users/login", checkAuthenticated, (request, response) => {
+//     response.render("login");
+// });
 
 // set the user variable/object to myself as a placeholder. This will print my name in the dashboard views file.
 app.get("/users/dashboard", checkNotAuthenticated, (request, response) => {
@@ -73,15 +78,15 @@ app.get("/users/logout", (request, response) => {
 app.post("/users/register", async (request, response) => {
     let { name, email, username, password, password_confirmation, cooking_level } = request.body;
 
-// printing the params back to the console to see if it's returning anything - test passes!
-    console.log({
-        name,
-        email,
-        username,
-        password,
-        password_confirmation,
-        cooking_level
-    });
+    // printing the params back to the console to see if it's returning anything - test passes!
+    // console.log({
+    //     name,
+    //     email,
+    //     username,
+    //     password,
+    //     password_confirmation,
+    //     cooking_level
+    // });
 
     // creating error messages to make sure input is valid.
     let errors = [];
@@ -100,7 +105,8 @@ app.post("/users/register", async (request, response) => {
 
     // Messages all pushed to an error array. If the array has a message, the page will be refreshed with said message.
     if (errors.length > 0){
-        response.render("register", { errors });
+        // Send the errors back to the client ... the client can figure out how to deal with them
+        response.json({ errors })
     }else{
         // If reaches here, form validation has passed.
         // using bcrypt to add a "salt" of "10" to the users password so we can store it in the database safely.
@@ -114,22 +120,22 @@ app.post("/users/register", async (request, response) => {
                 if (error) {
                     throw error
                 }
-                // getting visibility
+                // getting visibility 😍
                 console.log(results.rows);
                 // email validation method, similar to the validation methods above
                 if (results.rows.length > 0){
                     errors.push({ message: "Email already in use!"});
-                    response.render("register", { errors });
+                    response.json({ errors });
                 }else{
-                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level) VALUES ($1, $2, $3, $4, $5)`,
+                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
                     [name, email, username, hashedPassword, cooking_level],
                         (error, results) => {
                             if (error) {
                                 throw error;
                             }
-                            console.log(results.rows);
-                            request.flash('success_msg', "Successfully created an account! Please log in")
-                            response.redirect("/users/login")
+                            
+                            // request.flash('success_msg', "Successfully created an account! Please log in")
+                            response.json({ data: results.rows[0] })
                         }
                     )
                 }
@@ -142,11 +148,17 @@ app.post("/users/register", async (request, response) => {
 // passport.authenticate uses the local ("Local Strategy" line 1 on passport Config).
 // This then takes an object which redirects the user based on success or failure, using passport features
 // failureFlash will use the express flash methods in the passport.config initialize method.
-app.post("/users/login", passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/users/login",
-    failureFlash: true
-}));
+app.post("/users/login", passport.authorize("local"), (req, res) => {
+    let { email, password } = req.body;
+    pool.query(`SELECT * FROM users WHERE email = $1`, [email],
+    (error, results) => {
+        if (error) {
+            throw error
+        }
+
+        return res.json({ data: results.rows[0]})
+    })
+})
 
 function checkAuthenticated(request, response, next){
     // if a user is authenticated, they'll be re-directed to the dashboard
