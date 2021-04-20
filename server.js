@@ -127,7 +127,7 @@ app.post("/users/register", async (request, response) => {
                     errors.push({ message: "Email already in use!"});
                     response.json({ errors });
                 }else{
-                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+                    pool.query(`INSERT INTO users (name, email, username, password, cooking_level, points) VALUES ($1, $2, $3, $4, $5, ${cooking_level * 100}) RETURNING *`,
                     [name, email, username, hashedPassword, cooking_level],
                         (error, results) => {
                             if (error) {
