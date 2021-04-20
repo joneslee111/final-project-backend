@@ -4,6 +4,7 @@ name VARCHAR(200) NOT NULL,
 email VARCHAR(320) NOT NULL,
 username VARCHAR(20) NOT NULL,
 password VARCHAR(200) NOT NULL,
+points INT,
 cooking_level INT,
 UNIQUE (email)
 );
