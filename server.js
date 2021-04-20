@@ -44,12 +44,12 @@ app.use(cors());
 // ROUTES
 
 // these are the app controller routes
-app.get("/", checkNotAuthenticated, async (request, response) => {
+app.get("/", async (request, response) => {
     try {
-        const level = request.user.cooking_level;
+        const level = request.headers.level;
         console.log(level);
         const recipes = await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]);
-        response.json(recipes.rows)
+        response.json(recipes)
     } catch (err) {
         console.error(err.message)
     };
