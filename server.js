@@ -136,6 +136,7 @@ app.post("/users/register", async (request, response) => {
                             
                             // request.flash('success_msg', "Successfully created an account! Please log in")
                             response.json({ data: results.rows[0] })
+                            console.log(results.rows)
                         }
                     )
                 }
