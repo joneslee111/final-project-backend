@@ -43,7 +43,6 @@ app.use(cors());
 app.get("/", async (request, response) => {
     try {
         const level = request.headers.level;
-        console.log(level);
         const recipes = await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]);
         response.json(recipes)
     } catch (err) {
@@ -54,11 +53,13 @@ app.get("/", async (request, response) => {
 const API_KEY = "f601f3afe5634ecf9235684153a22291";
 
 app.get("/recipe", async (req, res) => {
+
     try {
-        const recipe_id = '715495' //request.headers.recipe_id;
+        const recipe_id = req.headers.recipe_id;
         console.log(recipe_id);
         
-        const url = `https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions&apiKey=${API_KEY}`;
+        const url = "https://api.spoonacular.com/recipes/"  +  recipe_id + "/analyzedInstructions?apiKey=36a625081590440285cabb596440609b"; //`https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions?apiKey=${API_KEY}`;
+        console.log(url)
         const options = {
             method: "GET",
             headers: {
@@ -67,7 +68,7 @@ app.get("/recipe", async (req, res) => {
         };
         const apiResponse = await fetch(url, options);
         const recipeJson = await apiResponse.json();
-        
+        console.log(recipeJson)
         return res.json(recipeJson);
     } catch (err) {
         console.error(err.message)
@@ -166,23 +167,23 @@ app.listen(PORT, () => {
 
 
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
-app.get("/fetch_recipe", async (req, res) => {
-  console.log("/fetch_recipe endpoint called");
-//   const fromNumber = req.params.from
-//   const toNumber = req.params.to
-  const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
-  const options = {
-    "method": "GET"
-  };
-  const apiResponse = await fetch(url, options);
-  const jsonApiResponse = await apiResponse.json();
+// app.get("/fetch_recipe", async (req, res) => {
+//   console.log("/fetch_recipe endpoint called");
+// //   const fromNumber = req.params.from
+// //   const toNumber = req.params.to
+//   const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
+//   const options = {
+//     "method": "GET"
+//   };
+//   const apiResponse = await fetch(url, options);
+//   const jsonApiResponse = await apiResponse.json();
 
-  console.log("RESPONSE: ", jsonApiResponse);
+//   console.log("RESPONSE: ", jsonApiResponse);
 
-  return res.json(jsonApiResponse);
-});
+//   return res.json(jsonApiResponse);
+// });
 
 
 module.exports = app;
