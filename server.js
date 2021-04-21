@@ -181,61 +181,68 @@ app.post("/", async (request, response) => {
     let points = request.body.points + 50
     let userId = request.body.userId
     let recipeId = request.body.recipeId
+    let recipeApiId = request.body.recipeApiId
     let cooking_level = request.body.cookingLevel
     let errors = [];
 
-    if (points % cooking_level == 50 )
-    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`, 
+    // if (points % cooking_level == 50 )
+    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *;`, 
         (error, results) => {
             if (error) {
                 throw error;
             }
-            const data = { 
-                userId: results.rows[0].id,
-                cooking_level: results.rows[0].cooking_level, 
-                points: results.rows[0].points,
-                completed: results.rows[0].completed 
-            }
-            response.json(data)
+            const first_results = results.rows[0]
+
+                pool.query(`INSERT INTO completed_recipes (completed, user_id, recipe_id, recipe_api_id) VALUES( true, ${userId}, ${recipeId}, ${recipeApiId}) RETURNING id, completed, user_id, recipe_id, recipe_api_id;`,
+                    (error, results) => {
+                        if (error) {
+                            throw error;
+                        }
+                    console.log("this is the second lot of results:")
+                    console.log(results.rows[0].recipe_api_id)
+
+                    pool.query(`SELECT recipe_api_id FROM completed_recipes WHERE user_id = $1`, [userId],
+                    (error, results) => {
+                        if (error) {
+                            throw error;
+                        }
+
+                        const completed_recipes_array = results.rows.map(x => 
+                            x.recipe_api_id
+                            )
+                        console.log(completed_recipes_array)
+                        
+                        const data_response = {
+                            completed_recipes_array: completed_recipes_array,
+                            cooking_level: first_results.cooking_level,
+                            points: first_results.points
+                        }
+
+                        response.json(data_response)
+                    });
+
+
+                    
+                });
+            
+            
+            
+            
+            
+            
+            // const data = { 
+            //     userId: results.rows[0].id,
+            //     cooking_level: results.rows[0].cooking_level, 
+            //     points: results.rows[0].points,
+            //     completed: results.rows[0].completed 
+            // }
+            
+            // response.json(data)
         }
 
 
     )
-    pool.query(`INSERT INTO completed_recipes (completed, user_id, recipe_id) VALUES( true, ${userId}, ${recipeId}) RETURNING id, completed, user_id, recipe_id;`,
-        (error, results) => {
-            if (error) {
-                throw error;
-            }
-            const completed_data = { 
-                completed: results.rows[0].completed 
-            }
-            response.json(completed_data)
-        });
-
-
-
 
 })
-
-
-
-// app.use(express.static('public'));
-
-// app.get("/fetch_recipe", async (req, res) => {
-//   console.log("/fetch_recipe endpoint called");
-// //   const fromNumber = req.params.from
-// //   const toNumber = req.params.to
-//   const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
-//   const options = {
-//     "method": "GET"
-//   };
-//   const apiResponse = await fetch(url, options);
-//   const jsonApiResponse = await apiResponse.json();
-
-//   console.log("RESPONSE: ", jsonApiResponse);
-
-//   return res.json(jsonApiResponse);
-// });
-
 
 module.exports = app;
