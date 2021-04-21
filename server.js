@@ -45,7 +45,6 @@ app.use(cors());
 app.get("/", async (request, response) => {
     try {
         const level = request.query.level;
-        console.log(level);
         const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]));
         // const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level])).rows;
 
@@ -62,7 +61,6 @@ app.get("/recipe", async (req, res) => {
 
     try {
         const recipe_id = req.query.recipe_id;
-        console.log(recipe_id);
         const url = "https://api.spoonacular.com/recipes/"  +  recipe_id + "/information?instructionsRequired=true&apiKey=f601f3afe5634ecf9235684153a22291"; //`https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions?apiKey=${API_KEY}`;
         console.log(url)
         const options = {
@@ -73,7 +71,6 @@ app.get("/recipe", async (req, res) => {
         };
         const apiResponse = await fetch(url, options);
         const recipeJson = await apiResponse.json();
-        console.log(recipeJson)
         return res.json(recipeJson);
     } catch (err) {
         console.error(err.message)
