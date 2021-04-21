@@ -55,7 +55,7 @@ const API_KEY = "f601f3afe5634ecf9235684153a22291";
 app.get("/recipe", async (req, res) => {
 
     try {
-        const recipe_id = req.headers.recipe_id;
+        const recipe_id = req.query.recipe_id;
         console.log(recipe_id);
         
         const url = "https://api.spoonacular.com/recipes/"  +  recipe_id + "/analyzedInstructions?apiKey=36a625081590440285cabb596440609b"; //`https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions?apiKey=${API_KEY}`;
