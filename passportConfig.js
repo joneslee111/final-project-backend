@@ -11,6 +11,7 @@ function initialize(passport) {
                     throw error;
                 }
                 console.log(results.rows);
+                console.log("getting here");
                 // if there is a match in the email, user variable is assigned
                 if (results.rows.length > 0){
                     const user = results.rows[0];
@@ -18,6 +19,7 @@ function initialize(passport) {
                     // isMatch will be rendered true if the passwords do match
                     bcrypt.compare(password, user.password, (error, isMatch)=>{
                         if (error) {
+                            console.log("error");
                             throw error;
                         }
                         // 'done' is an in-built node function: https://stackoverflow.com/questions/28656780/what-is-the-attribute-done-in-nodejs
