@@ -102,6 +102,11 @@ app.post("/users/register", async (request, response) => {
     if (password != password_confirmation){
         errors.push({ message: "Passwords do not match." });
     }
+    if (cooking_level === "null"){
+        errors.push({ message: "Please enter a valid cooking level."});
+    }
+
+    // Messages all pushed to an error array. If the array has a message, the page will be refreshed with said message.
     if (errors.length > 0){
         response.json({ errors })
     } else {
@@ -144,8 +149,8 @@ app.post("/users/login", passport.authorize("local"), (req, res) => {
     (error, results) => {
         if (error) {
             throw error
+            
         }
-
         return res.json({ data: results.rows[0]})
     })
 })
