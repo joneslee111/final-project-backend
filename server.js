@@ -176,6 +176,7 @@ app.post("/", async (request, response) => {
     let points = request.body.points
     let userId = request.body.userId
     let errors = [];
+
     // if (points )
     pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`,
         (error, results) => {
