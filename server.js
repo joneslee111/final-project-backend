@@ -180,10 +180,12 @@ app.listen(PORT, () => {
 app.post("/", async (request, response) => {
     let points = request.body.points + 50
     let userId = request.body.userId
+    let recipeId = request.body.recipeId
+    let cooking_level = request.body.cookingLevel
     let errors = [];
 
-    // if (points )
-    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`,
+    if (points % cooking_level == 50 )
+    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`, 
         (error, results) => {
             if (error) {
                 throw error;
@@ -191,11 +193,26 @@ app.post("/", async (request, response) => {
             const data = { 
                 userId: results.rows[0].id,
                 cooking_level: results.rows[0].cooking_level, 
-                points: results.rows[0].points 
+                points: results.rows[0].points,
+                completed: results.rows[0].completed 
             }
             response.json(data)
         }
+
+
     )
+    pool.query(`INSERT INTO completed_recipes (completed, user_id, recipe_id) VALUES( true, ${userId}, ${recipeId}) RETURNING id, completed, user_id, recipe_id;`,
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            const completed_data = { 
+                completed: results.rows[0].completed 
+            }
+            response.json(completed_data)
+        });
+
+
 
 
 })
