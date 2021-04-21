@@ -11,6 +11,8 @@ const fetch = require("node-fetch");
 const pg = require("pg");
 const cors = require("cors");
 const { request } = require("express");
+const http = require('http');
+const url = require('url'); // to get access to url.parse to read query string parameters
 
 initializePassport(passport);
 
@@ -46,9 +48,10 @@ app.use(cors());
 // these are the app controller routes
 app.get("/", async (request, response) => {
     try {
-        const level = request.headers.level;
+        const level = request.query.level;
         console.log(level);
-        const recipes = await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]);
+        const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]));
+        // const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level])).rows;
         response.json(recipes)
     } catch (err) {
         console.error(err.message)
@@ -133,7 +136,7 @@ app.post("/users/register", async (request, response) => {
                             if (error) {
                                 throw error;
                             }
-                            
+
                             // request.flash('success_msg', "Successfully created an account! Please log in")
                             response.json({ data: results.rows[0] })
                             console.log(results.rows)
