@@ -175,6 +175,30 @@ app.listen(PORT, () => {
     console.log( `server running on port ${PORT}`);
 });
 
+//changing the users points in the database, possibly the level too 🙀
+
+app.post("/", async (request, response) => {
+    let points = request.body.points + 50
+    let userId = request.body.userId
+    let errors = [];
+
+    // if (points )
+    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`,
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            const data = { 
+                userId: results.rows[0].id,
+                cooking_level: results.rows[0].cooking_level, 
+                points: results.rows[0].points 
+            }
+            response.json(data)
+        }
+    )
+
+
+})
 
 
 
