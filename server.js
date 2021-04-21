@@ -183,7 +183,11 @@ app.post("/", async (request, response) => {
                 throw error;
             }
             console.log(results.rows);
-            response.json({ data: results })
+            response.json({ 
+                userId: results.rows[0].id,
+                level: results.rows[0].cooking_level, 
+                points: results.rows[0].points 
+            })
         }
     )
 
