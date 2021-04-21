@@ -173,7 +173,7 @@ app.listen(PORT, () => {
 //changing the users points in the database, possibly the level too 🙀
 
 app.post("/", async (request, response) => {
-    let points = request.body.points
+    let points = request.body.points + 50
     let userId = request.body.userId
     let errors = [];
 
@@ -183,12 +183,12 @@ app.post("/", async (request, response) => {
             if (error) {
                 throw error;
             }
-            console.log(results.rows);
-            response.json({ 
+            const data = { 
                 userId: results.rows[0].id,
-                level: results.rows[0].cooking_level, 
+                cooking_level: results.rows[0].cooking_level, 
                 points: results.rows[0].points 
-            })
+            }
+            response.json(data)
         }
     )
 
