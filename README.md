@@ -37,7 +37,7 @@
 ## Project Set Up
 
 - __API registration__ register for an API key through [Spoonacular](https://spoonacular.com/)
-- __Tables__ undertake migrations for the three tables within the project, which can be found [here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
+- __Table migrations:__ there are three tables within the project,  which can be found [here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
 - __Upload CSV file__ Import [this](https://github.com/joneslee111/final-project-backend/blob/main/Recipe%20sorting%20-%20Dishes.csv) CSV file to `02_create_curated_recipe_table.sql` using TablePlus.
 
 ## Screenshots
