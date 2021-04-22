@@ -45,19 +45,19 @@
 ## Project Set Up
 
 - __API registration__ register for an API key through [Spoonacular](https://spoonacular.com/)
-- __Tables__ undertake migrations for the three tables within the project, which can be found[here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
+- __Tables__ undertake migrations for the three tables within the project, which can be found [here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
 - __Upload CSV file__ Import [this](https://github.com/joneslee111/final-project-backend/blob/main/Recipe%20sorting%20-%20Dishes.csv) CSV file to `02_create_curated_recipe_table.sql` using TablePlus.
 
 
 <h1 align="center">Cookwars</h1>
 
 <!-- gif of work here -->
-<img width="1280" alt="Screenshot 2021-04-22 at 14 52 33" src="https://user-images.githubusercontent.com/76783075/115728398-64f54580-a37c-11eb-83f4-ff98d9f6abed.png">
+<img width="700" alt="Screenshot 2021-04-22 at 14 52 33" src="https://user-images.githubusercontent.com/76783075/115728398-64f54580-a37c-11eb-83f4-ff98d9f6abed.png">
 
 
-<img width="1280" alt="Screenshot 2021-04-22 at 14 53 03" src="https://user-images.githubusercontent.com/76783075/115728603-88b88b80-a37c-11eb-9f2a-ad05f237935f.png">
+<img width="700" alt="Screenshot 2021-04-22 at 14 53 03" src="https://user-images.githubusercontent.com/76783075/115728603-88b88b80-a37c-11eb-9f2a-ad05f237935f.png">
 
-<img width="1280" alt="Screenshot 2021-04-22 at 14 53 10" src="https://user-images.githubusercontent.com/76783075/115728659-95d57a80-a37c-11eb-9a30-14ac60132382.png">
+<img width="700" alt="Screenshot 2021-04-22 at 14 53 10" src="https://user-images.githubusercontent.com/76783075/115728659-95d57a80-a37c-11eb-9a30-14ac60132382.png">
 
 <details align='center'><summary>Table of Contents</summary>
   <h2>Table of Contents</h2>
