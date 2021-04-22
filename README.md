@@ -46,7 +46,7 @@
 
 - __API registration__ register for an API key through [Spoonacular](https://spoonacular.com/)
 - __Tables__ undertake migrations for the three tables within the project, which can be found[here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
-- __Upload CSV file__ Import this CSV file to `02_create_curated_recipe_table.sql` using TablePlus.
+- __Upload CSV file__ Import [this](Recipe sorting - Dishes.csv) CSV file to `02_create_curated_recipe_table.sql` using TablePlus.
 
 
 <h1 align="center">Cookwars</h1>
