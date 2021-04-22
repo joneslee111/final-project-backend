@@ -34,7 +34,13 @@
 - [Support](#support)
 
 
-# README
+## Features
+- __register:__ sign up with email and password authentication, select your cooking level. 
+- __log-in/log-out:__ as described
+- __recipes catered to your level:__ receive ten recipes to choose from that match your cooking ability
+- __mark as complete and store recipes:__ adds completed recipes to your dashboard
+- __earn points:__ earn 50 points for every recipe completed
+- __level-up:__ finish level 9 to complete cookwars and achieve cooking enlightenment! 
 
 # MIGRATIONS
 
