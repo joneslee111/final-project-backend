@@ -19,7 +19,7 @@
 
 ## Table of Contents
 - [Features](#features)
-- [Example](#example)
+- [Project setup](#projectsetup)
 - [Philosophy](#philosophy)
 - [Events](#events)
 - [State](#state)
@@ -42,9 +42,11 @@
 - __earn points:__ earn 50 points for every recipe completed
 - __level-up:__ finish level 9 to complete cookwars and achieve cooking enlightenment! 
 
-# MIGRATIONS
+## Project Set Up
 
-This project consists of three tables 
+- __API registration__ register for an API key through [Spoonacular](https://spoonacular.com/)
+- __tables__ the project consists of three tables, migrations for which can be found [here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
+- anually upload a CSV file with pre-allocated 'cooking levels' and the API IDs to call the Spoonacular API.
 
 
 <h1 align="center">Cookwars</h1>
