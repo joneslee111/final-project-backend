@@ -193,11 +193,11 @@ app.listen(PORT, () => {
 //changing the users points in the database, possibly the level too 🙀
 
 app.post("/", async (request, response) => {
-    let points = request.body.points + 50
+    let points = request.body.points + 20
     let userId = request.body.userId
     let recipeId = request.body.recipeId
     let recipeApiId = request.body.recipeApiId
-    let cooking_level = request.body.cookingLevel
+    let cooking_level = Math.floor(points / 100)
     let errors = [];
     console.log(cooking_level);
 
