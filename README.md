@@ -1,12 +1,12 @@
 # Cookwars - Makers final project
 
-<h1 align="center">Choo</h1>
+<h1 align="center">Cookwars</h1>
 
 <div align="center">
   :space_invader::stew::space_invader::stew::space_invader::stew::space_invader:
 </div>
 <div align="center">
-  <strong>Cookwars - Team Turtle:turtle:- Makers final project</strong>
+  <strong>Makers final project</strong>
 </div>
 <div align="center">
   A website that teaches you to cook and give you points for it. 
@@ -15,7 +15,7 @@
 <br />
 
 <div align="center">
-  <sub>Built with ❤︎ by @joneslee11 @kjjwhitlock @a-nawrocka @sandyMax974 @rhc07 @raf-swiderski
+  <sub>Built with ❤︎ by Team Turtle:turtle:
   </a>
 </div>
 
