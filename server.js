@@ -45,10 +45,28 @@ app.use(cors());
 app.get("/", async (request, response) => {
     try {
         const level = request.query.level;
+        const userId = request.query.userId;
         const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]));
         // const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level])).rows;
+        pool.query(`SELECT recipe_api_id FROM completed_recipes WHERE user_id = $1`, [userId],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
 
-        response.json(recipes)
+            const completed_recipes_array = results.rows.map(x => 
+                x.recipe_api_id
+            )
+
+            console.log(completed_recipes_array)
+
+            response.json({
+                completed: completed_recipes_array,
+                recipes: recipes.rows
+            })
+        })
+
+       
     } catch (err) {
         console.error(err.message)
     };
