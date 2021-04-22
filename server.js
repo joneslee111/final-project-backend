@@ -181,41 +181,34 @@ app.post("/", async (request, response) => {
     let points = request.body.points + 50
     let userId = request.body.userId
     let recipeId = request.body.recipeId
+    let completed = true
     let cooking_level = request.body.cookingLevel
     let errors = [];
 
-    if (points % cooking_level == 50 )
-    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`, 
+
+    pool.query(`INSERT INTO completed_recipes (completed, user_id, recipe_id) VALUES( $1, $2, $3) RETURNING id, completed, user_id, recipe_id;`,
+    [completed, userId, recipeId],
         (error, results) => {
             if (error) {
                 throw error;
             }
-            const data = { 
-                userId: results.rows[0].id,
-                cooking_level: results.rows[0].cooking_level, 
-                points: results.rows[0].points,
-                completed: results.rows[0].completed 
-            }
+            console.log(results.rows);
+            if(results.rows.length > 0)
+                pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`, 
+                (error, results) => {
+                    if (error) {
+                    throw error;
+                }
+                const data = { 
+                    userId: results.rows[0].id,
+                    cooking_level: results.rows[0].cooking_level, 
+                    points: results.rows[0].points
+                }
             response.json(data)
-        }
-
-
-    )
-    pool.query(`INSERT INTO completed_recipes (completed, user_id, recipe_id) VALUES( true, ${userId}, ${recipeId}) RETURNING id, completed, user_id, recipe_id;`,
-        (error, results) => {
-            if (error) {
-                throw error;
-            }
-            const completed_data = { 
-                completed: results.rows[0].completed 
-            }
-            response.json(completed_data)
+            })
         });
+    })  
 
-
-
-
-})
 
 
 
