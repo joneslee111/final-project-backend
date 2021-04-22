@@ -1,4 +1,7 @@
-[![forthebadge](https://forthebadge.com/images/badges/certified-snoop-lion.svg)](https://forthebadge.com).        [![forthebadge](https://forthebadge.com/images/badges/fo-shizzle.svg)](https://forthebadge.com).                      [![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://forthebadge.com)
+<div align="center">
+  <sub>[![forthebadge](https://forthebadge.com/images/badges/certified-snoop-lion.svg)](https://forthebadge.com).        [![forthebadge](https://forthebadge.com/images/badges/fo-shizzle.svg)](https://forthebadge.com).                      [![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://forthebadge.com)
+  </a>
+</div>
 
 <h1 align="center">Cookwars</h1>
 
