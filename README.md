@@ -1,5 +1,3 @@
-# Cookwars - Makers final project
-
 <h1 align="center">Cookwars</h1>
 
 <div align="center">
