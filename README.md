@@ -1,32 +1,82 @@
-# final-project
+# Cookwars - Makers final project
+
+<h1 align="center">Choo</h1>
+
+<div align="center">
+  :space_invader::stew::space_invader::stew::space_invader::stew::space_invader:
+</div>
+<div align="center">
+  <strong>Cookwars - Team Turtle:turtle:- Makers final project</strong>
+</div>
+<div align="center">
+  A website that teaches you to cook and give you points for it. 
+</div>
+
+<br />
+
+<div align="center">
+  <!-- Stability -->
+  <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
+    <img src="https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square"
+      alt="API stability" />
+  </a>
+  <!-- NPM version -->
+  <a href="https://npmjs.org/package/choo">
+    <img src="https://img.shields.io/npm/v/choo.svg?style=flat-square"
+      alt="NPM version" />
+  </a>
+  <!-- Build Status -->
+  <a href="https://travis-ci.org/choojs/choo">
+    <img src="https://img.shields.io/travis/choojs/choo/master.svg?style=flat-square"
+      alt="Build Status" />
+  </a>
+  <!-- Test Coverage -->
+  <a href="https://codecov.io/github/choojs/choo">
+    <img src="https://img.shields.io/codecov/c/github/choojs/choo/master.svg?style=flat-square"
+      alt="Test Coverage" />
+  </a>
+  <!-- Downloads -->
+  <a href="https://npmjs.org/package/choo">
+    <img src="https://img.shields.io/npm/dt/choo.svg?style=flat-square"
+      alt="Download" />
+  </a>
+  <!-- Standard -->
+  <a href="https://standardjs.com">
+    <img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square"
+      alt="Standard" />
+  </a>
+</div>
+  
+<div align="center">
+  <sub>Built with ❤︎ by @kjjwhitlock @joneslee11
+  </a>
+</div>
+
+## Table of Contents
+- [Features](#features)
+- [Example](#example)
+- [Philosophy](#philosophy)
+- [Events](#events)
+- [State](#state)
+- [Routing](#routing)
+- [Server Rendering](#server-rendering)
+- [Components](#components)
+- [Optimizations](#optimizations)
+- [FAQ](#faq)
+- [API](#api)
+- [Installation](#installation)
+- [See Also](#see-also)
+- [Support](#support)
+
 
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# MIGRATIONS
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This project consists of three tables 
 
 
-<h1 align="center">Final project name</h1>
+<h1 align="center">Cookwars</h1>
 
 <!-- gif of work here -->
 <img width="1280" alt="Screenshot 2021-04-22 at 14 52 33" src="https://user-images.githubusercontent.com/76783075/115728398-64f54580-a37c-11eb-83f4-ff98d9f6abed.png">
