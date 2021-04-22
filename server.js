@@ -44,11 +44,28 @@ app.use(cors());
 app.get("/", async (request, response) => {
     try {
         const level = request.query.level;
-        console.log(level);
+        const userId = request.query.userId;
         const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level]));
         // const recipes = await (await pool.query("SELECT * FROM curated_recipes WHERE level = $1", [level])).rows;
+        pool.query(`SELECT recipe_api_id FROM completed_recipes WHERE user_id = $1`, [userId],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
 
-        response.json(recipes)
+            const completed_recipes_array = results.rows.map(x => 
+                x.recipe_api_id
+            )
+
+            console.log(completed_recipes_array)
+
+            response.json({
+                completed: completed_recipes_array,
+                recipes: recipes.rows
+            })
+        })
+
+       
     } catch (err) {
         console.error(err.message)
     };
@@ -61,8 +78,10 @@ app.get("/recipe", async (req, res) => {
 
     try {
         const recipe_id = req.query.recipe_id;
+
         console.log(recipe_id);
         const url = "https://api.spoonacular.com/recipes/"  +  recipe_id + "/information?instructionsRequired=true&apiKey=" + API_KEY; //`https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions?apiKey=${API_KEY}`;
+
         console.log(url)
         const options = {
             method: "GET",
@@ -72,7 +91,6 @@ app.get("/recipe", async (req, res) => {
         };
         const apiResponse = await fetch(url, options);
         const recipeJson = await apiResponse.json();
-        console.log(recipeJson)
         return res.json(recipeJson);
     } catch (err) {
         console.error(err.message)
@@ -177,47 +195,61 @@ app.listen(PORT, () => {
 //changing the users points in the database, possibly the level too 🙀
 
 app.post("/", async (request, response) => {
-    let points = request.body.points + 50
+    let points = request.body.points + 20
     let userId = request.body.userId
+    let recipeId = request.body.recipeId
+    let recipeApiId = request.body.recipeApiId
+    let cooking_level = Math.floor(points / 100)
     let errors = [];
+    console.log(cooking_level);
 
-    // if (points )
-    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *`,
+      
+        pool.query(`UPDATE users SET cooking_level = ${cooking_level}, points = ${points} WHERE id = ${userId} RETURNING *;`, 
         (error, results) => {
             if (error) {
                 throw error;
             }
-            const data = {
-                userId: results.rows[0].id,
-                cooking_level: results.rows[0].cooking_level,
-                points: results.rows[0].points
-            }
-            response.json(data)
+
+            const first_results = results.rows[0]
+
+                pool.query(`INSERT INTO completed_recipes (completed, user_id, recipe_id, recipe_api_id) VALUES( true, ${userId}, ${recipeId}, ${recipeApiId}) RETURNING id, completed, user_id, recipe_id, recipe_api_id;`,
+                    (error, results) => {
+                        if (error) {
+                            throw error;
+                        }
+                    console.log("this is the second lot of results:")
+                    console.log(results.rows[0].recipe_api_id)
+
+                    pool.query(`SELECT recipe_api_id FROM completed_recipes WHERE user_id = $1`, [userId],
+                    (error, results) => {
+                        if (error) {
+                            throw error;
+                        }
+
+                        const completed_recipes_array = results.rows.map(x => 
+                            x.recipe_api_id
+                            )
+                        console.log(completed_recipes_array)
+                        
+                        const data_response = {
+                            completed_recipes_array: completed_recipes_array,
+                            cooking_level: first_results.cooking_level,
+                            points: first_results.points
+                        }
+
+                        response.json(data_response)
+                    });
+
+
+                    
+                });
+            
         }
+
+
     )
 
-
-})
-
-
-
-// app.use(express.static('public'));
-
-// app.get("/fetch_recipe", async (req, res) => {
-//   console.log("/fetch_recipe endpoint called");
-// //   const fromNumber = req.params.from
-// //   const toNumber = req.params.to
-//   const url = `https://api.spoonacular.com/recipes/complexSearch/?diet=vegan&instructionsRequired=true&apiKey=${API_KEY}`;
-//   const options = {
-//     "method": "GET"
-//   };
-//   const apiResponse = await fetch(url, options);
-//   const jsonApiResponse = await apiResponse.json();
-
-//   console.log("RESPONSE: ", jsonApiResponse);
-
-//   return res.json(jsonApiResponse);
-// });
+    }) 
 
 
 module.exports = app;
