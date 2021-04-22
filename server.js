@@ -13,7 +13,6 @@ const cors = require("cors");
 const { request } = require("express");
 const http = require('http');
 const url = require('url'); // to get access to url.parse to read query string parameters
-
 initializePassport(passport);
 
 const PORT = process.env.PORT || 9000;
@@ -72,14 +71,17 @@ app.get("/", async (request, response) => {
     };
 });
 
-const API_KEY = "f601f3afe5634ecf9235684153a22291";
+const API_KEY = process.env.API_KEY;
 // other api key "https://api.spoonacular.com/recipes/"  +  recipe_id + "/information?instructionsRequired=true&apiKey=36a625081590440285cabb596440609b"
 
 app.get("/recipe", async (req, res) => {
 
     try {
         const recipe_id = req.query.recipe_id;
-        const url = "https://api.spoonacular.com/recipes/"  +  recipe_id + "/information?instructionsRequired=true&apiKey=f601f3afe5634ecf9235684153a22291"; //`https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions?apiKey=${API_KEY}`;
+
+        console.log(recipe_id);
+        const url = "https://api.spoonacular.com/recipes/"  +  recipe_id + "/information?instructionsRequired=true&apiKey=" + API_KEY; //`https://api.spoonacular.com/recipes/${recipe_id}/analyzedInstructions?apiKey=${API_KEY}`;
+
         console.log(url)
         const options = {
             method: "GET",
@@ -165,7 +167,7 @@ app.post("/users/login", passport.authorize("local"), (req, res) => {
     (error, results) => {
         if (error) {
             throw error
-            
+
         }
         return res.json({ data: results.rows[0]})
     })
@@ -207,6 +209,7 @@ app.post("/", async (request, response) => {
             if (error) {
                 throw error;
             }
+
             const first_results = results.rows[0]
 
                 pool.query(`INSERT INTO completed_recipes (completed, user_id, recipe_id, recipe_api_id) VALUES( true, ${userId}, ${recipeId}, ${recipeApiId}) RETURNING id, completed, user_id, recipe_id, recipe_api_id;`,
@@ -241,19 +244,6 @@ app.post("/", async (request, response) => {
                     
                 });
             
-            
-            
-            
-            
-            
-            // const data = { 
-            //     userId: results.rows[0].id,
-            //     cooking_level: results.rows[0].cooking_level, 
-            //     points: results.rows[0].points,
-            //     completed: results.rows[0].completed 
-            // }
-            
-            // response.json(data)
         }
 
 
@@ -261,8 +251,5 @@ app.post("/", async (request, response) => {
 
     }) 
 
-    // }
-    // }
-    // )
 
 module.exports = app;

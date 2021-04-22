@@ -1,73 +1,52 @@
-# final-project
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)  [![forthebadge](https://forthebadge.com/images/badges/certified-snoop-lion.svg)](https://forthebadge.com)
 
-# README
+<h1 align="center">Cookwars</h1>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<div align="center">
+  :space_invader::stew::space_invader::stew::space_invader::stew::space_invader:
+</div>
+<div align="center">
+  <strong>Makers final project</strong>
+</div>
+<div align="center">
+  A website that teaches you to cook and give you points for it. 
+</div>
 
-Things you may want to cover:
+<br />
 
-* Ruby version
+<div align="center">
+  <sub>Built with ❤︎ by Team Turtle:turtle:
+  </a>
+</div>
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Table of Contents
+- [Features](#features)
+- [Technology](#technology)
+- [Project setup](#projectsetup)
+- [Screenshots](#screenshots)
 
 
-<h1 align="center">Final project name</h1>
+## Features
+- __register:__ sign up with email and password authentication, select your cooking level. 
+- __log-in/log-out:__ as described
+- __recipes catered to your level:__ receive ten recipes to choose from that match your cooking ability
+- __mark as complete and store recipes:__ adds completed recipes to your dashboard
+- __earn points:__ earn 50 points for every recipe completed
+- __level-up:__ finish level 9 to complete cookwars and achieve cooking enlightenment! 
+
+## Project Set Up
+
+- __API registration__ register for an API key through [Spoonacular](https://spoonacular.com/)
+- __Table migrations:__ there are three tables within the project,  which can be found [here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
+- __Upload CSV file__ Import [this](https://github.com/joneslee111/final-project-backend/blob/main/Recipe%20sorting%20-%20Dishes.csv) CSV file to `02_create_curated_recipe_table.sql` using TablePlus.
+
+## Screenshots
 
 <!-- gif of work here -->
-
-<details align='center'><summary>Table of Contents</summary>
-  <h2>Table of Contents</h2>
-  <p>
-  <a href="#general-info">• General Info</a><br>
-  <a href="#technologies">• Technologies</a><br>
-  <a href="#specifications">• Specifications</a><br>
-  <a href="#user-stories">• User Stories</a><br>
-  <a href="#planning">• Planning</a><br>
-  <a href="#screenshots">• Screenshots</a><br>
-  <a href="#setup">• Setup</a><br>
-  </p>
-</details>
+<img width="700" alt="Screenshot 2021-04-22 at 14 52 33" src="https://user-images.githubusercontent.com/76783075/115728398-64f54580-a37c-11eb-83f4-ff98d9f6abed.png">
 
 
-<h2>General Info</h2>
-<h2>Technologies</h2>
-<h2>Specifications</h2>
-<h2>User Stories</h2>
+<img width="700" alt="Screenshot 2021-04-22 at 14 53 03" src="https://user-images.githubusercontent.com/76783075/115728603-88b88b80-a37c-11eb-9f2a-ad05f237935f.png">
 
-```
-As a User,
+<img width="700" alt="Screenshot 2021-04-22 at 14 53 10" src="https://user-images.githubusercontent.com/76783075/115728659-95d57a80-a37c-11eb-9a30-14ac60132382.png">
 
-```
-
-```
-As a User,
-
-```
-
-```
-As a user,
-
-```
-
-```
-As a user,
-
-```
-<h2>Planning</h2>
-<h2>Screenshots<h2>
-<h2>Setup</h2>
