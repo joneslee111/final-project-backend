@@ -199,9 +199,10 @@ app.post("/", async (request, response) => {
     let recipeApiId = request.body.recipeApiId
     let cooking_level = request.body.cookingLevel
     let errors = [];
+    console.log(cooking_level);
 
-    // if (points % cooking_level == 50 )
-    pool.query(`UPDATE users SET points = ${points} WHERE id = ${userId} RETURNING *;`, 
+      
+        pool.query(`UPDATE users SET cooking_level = ${cooking_level}, points = ${points} WHERE id = ${userId} RETURNING *;`, 
         (error, results) => {
             if (error) {
                 throw error;
@@ -258,6 +259,10 @@ app.post("/", async (request, response) => {
 
     )
 
-})
+    }) 
+
+    // }
+    // }
+    // )
 
 module.exports = app;
