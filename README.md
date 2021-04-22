@@ -1,4 +1,6 @@
+<div align="center">
 [![forthebadge](https://forthebadge.com/images/badges/certified-snoop-lion.svg)](https://forthebadge.com).        [![forthebadge](https://forthebadge.com/images/badges/fo-shizzle.svg)](https://forthebadge.com).       [![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://forthebadge.com)
+  </div>
 
 <h1 align="center">Cookwars</h1>
 
