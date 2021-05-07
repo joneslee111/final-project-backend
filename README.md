@@ -35,6 +35,12 @@
 - __earn points:__ earn 50 points for every recipe completed
 - __level-up:__ finish level 9 to complete cookwars and achieve cooking enlightenment! 
 
+## Technology
+* PostgreSQL
+* Express.js
+* React
+* Node.js
+
 ## Project Set Up
 
 - __API registration__ register for an API key through [Spoonacular](https://spoonacular.com/)
