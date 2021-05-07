@@ -22,7 +22,8 @@
 ## Table of Contents
 - [Features](#features)
 - [Technology](#technology)
-- [Project setup](#projectsetup)
+- [Project Set Up](#project-set-up)
+- [Demo](#demo)
 - [Screenshots](#screenshots)
 
 
@@ -40,13 +41,15 @@
 - __Table migrations:__ there are three tables within the project,  which can be found [here](https://github.com/joneslee111/final-project-backend/tree/main/db/migrations)
 - __Upload CSV file__ Import [this](https://github.com/joneslee111/final-project-backend/blob/main/Recipe%20sorting%20-%20Dishes.csv) CSV file to `02_create_curated_recipe_table.sql` using TablePlus.
 
+## Demo
+
+https://user-images.githubusercontent.com/21693444/117489075-0f688d80-af65-11eb-8a09-8693c5fba49d.mov
+
+
 ## Screenshots
 
-<!-- gif of work here -->
-<img width="700" alt="Screenshot 2021-04-22 at 14 52 33" src="https://user-images.githubusercontent.com/76783075/115728398-64f54580-a37c-11eb-83f4-ff98d9f6abed.png">
-
+<img width="700" alt="Screenshot 2021-04-22 at 21 01 43" src="https://user-images.githubusercontent.com/21693444/117489381-76864200-af65-11eb-8f69-437f015c7c08.png">
 
 <img width="700" alt="Screenshot 2021-04-22 at 14 53 03" src="https://user-images.githubusercontent.com/76783075/115728603-88b88b80-a37c-11eb-9f2a-ad05f237935f.png">
 
 <img width="700" alt="Screenshot 2021-04-22 at 14 53 10" src="https://user-images.githubusercontent.com/76783075/115728659-95d57a80-a37c-11eb-9a30-14ac60132382.png">
-
