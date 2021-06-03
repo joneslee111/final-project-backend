@@ -18,6 +18,11 @@
   <sub>Built with ❤︎ by Team Turtle:turtle:
   </a>
 </div>
+<br />
+<div align="center">
+  To run CookWars you will need both the Backend and the Frontend (which can be found here https://github.com/raf-swiderski/final-project-frontend).
+</div>
+
 
 ## Table of Contents
 - [Features](#features)
